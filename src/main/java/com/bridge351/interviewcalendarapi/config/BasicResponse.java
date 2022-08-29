@@ -22,9 +22,6 @@ public class BasicResponse<T> {
     private String message = Strings.EMPTY;
 
     @Builder.Default
-    private String detail = Strings.EMPTY;
-
-    @Builder.Default
     private int statusCode = HttpStatus.OK.value();
 
     private T data;
@@ -61,14 +58,13 @@ public class BasicResponse<T> {
      *
      * @param statusCode - status code of the error
      * @param message    - msg of the error
-     * @param detail     - any extra information about the error
      * @return - the basic response
      */
-    public static BasicResponse fail(final int statusCode, final String message, final String detail) {
+    // TODO this is breaking the Generic Usability, since this is not generic, remove the fail method and build when needed
+    public static BasicResponse fail(final int statusCode, final String message) {
         return BasicResponse.builder()
                 .statusCode(statusCode)
                 .message(message)
-                .detail(detail)
                 .build();
     }
 
