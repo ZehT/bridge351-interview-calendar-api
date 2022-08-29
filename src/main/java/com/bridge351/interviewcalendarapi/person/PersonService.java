@@ -1,6 +1,7 @@
 package com.bridge351.interviewcalendarapi.person;
 
 import com.bridge351.interviewcalendarapi.person.domain.PersonEntity;
+import com.bridge351.interviewcalendarapi.person.enums.PersonTypeEnum;
 import com.bridge351.interviewcalendarapi.person.exception.PersonNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,12 +23,20 @@ public class PersonService {
         return this.personRepository.save(personEntity);
     }
 
-    public List<PersonEntity> findAllPersonsByType(final int typeId) {
-        final List<PersonEntity> personsEntity = this.personRepository.findAllPersonsByType(typeId);
-        if (CollectionUtils.isEmpty(personsEntity)) {
-            throw new PersonNotFoundException();
-        }
+    public List<PersonEntity> findAllPersonsByType(final int type) {
+        final List<PersonEntity> personsEntity = this.personRepository.findAllPersonsByType(type);
+        validatePersonsBeenFound(personsEntity, type);
         return personsEntity;
+    }
+
+    private void validatePersonsBeenFound(final List<PersonEntity> personsEntity, final int type) {
+        if (CollectionUtils.isEmpty(personsEntity)) {
+            String notFoundMsg = "person.exception.candidate.not.found";
+            if (PersonTypeEnum.INTERVIEWER.getType() == type) {
+                notFoundMsg = "person.exception.interviewer.not.found";
+            }
+            throw new PersonNotFoundException(notFoundMsg);
+        }
     }
 
 }

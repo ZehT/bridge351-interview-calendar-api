@@ -15,6 +15,6 @@ public enum PersonTypeEnum {
     CANDIDATE(1),
     INTERVIEWER(2);
 
-    private int id;
+    private int type;
 
 }

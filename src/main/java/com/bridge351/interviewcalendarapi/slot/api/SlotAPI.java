@@ -20,8 +20,7 @@ public interface SlotAPI {
     @ApiOperation(value = "Find Available Slots", nickname = "findSlots", response = BasicResponse.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = SlotDTO.class, responseContainer = "list"),
-            @ApiResponse(code = 204, message = "No Slots Found"),
-            @ApiResponse(code = 400, message = "Invalid Request"),
+            @ApiResponse(code = 200, message = "No Slots Found"),
             @ApiResponse(code = 500, message = "Server Error")
     })
     @GetMapping(value = "/slots/", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -21,7 +21,6 @@ public interface CandidateAPI {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "", response = PersonDTO.class, responseContainer = "list"),
             @ApiResponse(code = 200, message = "No Candidates Found"),
-            @ApiResponse(code = 400, message = "Invalid Request"),
             @ApiResponse(code = 500, message = "Server Error")
     })
     @GetMapping(value = "/candidates/", produces = MediaType.APPLICATION_JSON_VALUE)

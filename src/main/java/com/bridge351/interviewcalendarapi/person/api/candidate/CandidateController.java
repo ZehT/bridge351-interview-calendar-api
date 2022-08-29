@@ -25,7 +25,7 @@ public class CandidateController implements CandidateAPI {
 
     @Override
     public BasicResponse<List<PersonDTO>> getCandidates() {
-        final List<PersonEntity> personsEntity = this.personService.findAllPersonsByType(PersonTypeEnum.CANDIDATE.getId());
+        final List<PersonEntity> personsEntity = this.personService.findAllPersonsByType(PersonTypeEnum.CANDIDATE.getType());
         return BasicResponse.withData(personsEntity.stream()
                 .map(PersonDTO::ofEntity)
                 .collect(Collectors.toList()));
@@ -33,7 +33,7 @@ public class CandidateController implements CandidateAPI {
 
     @Override
     public BasicResponse<PersonDTO> addCandidate(final PersonDTO personDTO) {
-        final PersonEntity personEntity = this.personService.addPerson(PersonEntity.ofDTO(personDTO, PersonTypeEnum.CANDIDATE.getId()));
+        final PersonEntity personEntity = this.personService.addPerson(PersonEntity.ofDTO(personDTO, PersonTypeEnum.CANDIDATE.getType()));
         return BasicResponse.withDataAndMessage(
                 PersonDTO.ofEntity(personEntity),
                 this.messageSource.getMessage("person.candidate.created", null, Locale.getDefault())
