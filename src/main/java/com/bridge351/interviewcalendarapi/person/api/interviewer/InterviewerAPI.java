@@ -16,8 +16,8 @@ public interface InterviewerAPI {
 
     @ApiOperation(value = "Add Interviewer", nickname = "addInterviewer", response = BasicResponse.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Interviewer created.", response = PersonDTO.class),
-            @ApiResponse(code = 500, message = "Server Error.")
+            @ApiResponse(code = 200, message = "Interviewer created", response = PersonDTO.class),
+            @ApiResponse(code = 500, message = "Server Error")
     })
     @PostMapping(value = "/interviewers/", produces = MediaType.APPLICATION_JSON_VALUE)
     BasicResponse<PersonDTO> addInterviewer(@ApiParam(value = "Interviewer to create") @RequestBody final PersonDTO personDTO);
