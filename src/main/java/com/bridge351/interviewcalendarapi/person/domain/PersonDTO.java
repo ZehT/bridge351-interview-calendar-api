@@ -18,4 +18,12 @@ public class PersonDTO {
     private String name;
     private String email;
 
+    public static PersonDTO ofEntity(final PersonEntity personEntity) {
+        return PersonDTO.builder()
+                .id(personEntity.getId())
+                .name(personEntity.getName())
+                .email(personEntity.getEmail())
+                .build();
+    }
+
 }
