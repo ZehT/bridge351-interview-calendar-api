@@ -13,8 +13,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @SpringBootApplication(exclude = RepositoryRestMvcAutoConfiguration.class)
 public class InterviewCalendarApiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(InterviewCalendarApiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(InterviewCalendarApiApplication.class, args);
+    }
 
 }
