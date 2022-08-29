@@ -8,7 +8,9 @@ import com.bridge351.interviewcalendarapi.person.enums.PersonTypeEnum;
 import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 @RestController
 public class CandidateController implements CandidateAPI {
@@ -22,11 +24,19 @@ public class CandidateController implements CandidateAPI {
     }
 
     @Override
+    public BasicResponse<List<PersonDTO>> getCandidates() {
+        final List<PersonEntity> personsEntity = this.personService.findAllPersonsByType(PersonTypeEnum.CANDIDATE.getId());
+        return BasicResponse.withData(personsEntity.stream()
+                .map(PersonDTO::ofEntity)
+                .collect(Collectors.toList()));
+    }
+
+    @Override
     public BasicResponse<PersonDTO> addCandidate(final PersonDTO personDTO) {
         final PersonEntity personEntity = this.personService.addPerson(PersonEntity.ofDTO(personDTO, PersonTypeEnum.CANDIDATE.getId()));
         return BasicResponse.withDataAndMessage(
                 PersonDTO.ofEntity(personEntity),
-                messageSource.getMessage("person.candidate.created", null, Locale.getDefault())
+                this.messageSource.getMessage("person.candidate.created", null, Locale.getDefault())
         );
     }
 

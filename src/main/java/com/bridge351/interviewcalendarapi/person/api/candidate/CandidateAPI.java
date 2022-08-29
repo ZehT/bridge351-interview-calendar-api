@@ -8,16 +8,29 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
 
 @Api(value = "Candidate API", tags = "Candidate API")
 public interface CandidateAPI {
 
+    @ApiOperation(value = "List of Candidates", nickname = "getCandidates", response = BasicResponse.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "", response = PersonDTO.class, responseContainer = "list"),
+            @ApiResponse(code = 200, message = "No Candidates Found"),
+            @ApiResponse(code = 400, message = "Invalid Request"),
+            @ApiResponse(code = 500, message = "Server Error")
+    })
+    @GetMapping(value = "/candidates/", produces = MediaType.APPLICATION_JSON_VALUE)
+    BasicResponse<List<PersonDTO>> getCandidates();
+
     @ApiOperation(value = "Add Candidate", nickname = "addCandidate", response = BasicResponse.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Candidate created.", response = PersonDTO.class),
-            @ApiResponse(code = 500, message = "Server Error.")
+            @ApiResponse(code = 200, message = "Candidate created", response = PersonDTO.class),
+            @ApiResponse(code = 500, message = "Server Error")
     })
     @PostMapping(value = "/candidates/", produces = MediaType.APPLICATION_JSON_VALUE)
     BasicResponse<PersonDTO> addCandidate(@ApiParam(value = "Candidate to create") @RequestBody final PersonDTO personDTO);
