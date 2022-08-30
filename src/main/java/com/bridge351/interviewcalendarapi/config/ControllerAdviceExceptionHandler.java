@@ -1,7 +1,7 @@
 package com.bridge351.interviewcalendarapi.config;
 
+import com.bridge351.interviewcalendarapi.commons.exceptions.BusinessException;
 import com.bridge351.interviewcalendarapi.commons.exceptions.NotFoundException;
-import com.bridge351.interviewcalendarapi.slot.exception.SlotException;
 import org.springframework.context.MessageSource;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -35,9 +35,9 @@ public class ControllerAdviceExceptionHandler {
         return ResponseEntity.status(HttpStatus.OK).body(basicResponse);
     }
 
-    @ExceptionHandler(SlotException.class)
+    @ExceptionHandler(BusinessException.class)
     @ResponseStatus(code = HttpStatus.UNPROCESSABLE_ENTITY)
-    public ResponseEntity<BasicResponse<Object>> slotException(final SlotException slotException) {
+    public ResponseEntity<BasicResponse<Object>> slotException(final BusinessException slotException) {
         final BasicResponse<Object> basicResponse = BasicResponse.fail(HttpStatus.UNPROCESSABLE_ENTITY.value(),
                 this.messageSource.getMessage(slotException.getMessage(), null, Locale.getDefault()));
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(basicResponse);

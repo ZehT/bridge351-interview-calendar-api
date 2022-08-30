@@ -34,7 +34,7 @@ public class PersonEntity {
     @Column(name = "TYPE")
     private int type;
 
-    public static PersonEntity ofDTO(final PersonDTO personDTO, int type) {
+    public static PersonEntity ofDto(final PersonDTO personDTO, int type) {
         return PersonEntity.builder()
                 .name(personDTO.getName())
                 .email(personDTO.getEmail())
