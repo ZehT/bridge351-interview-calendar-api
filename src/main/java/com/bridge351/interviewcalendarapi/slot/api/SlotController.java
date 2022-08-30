@@ -5,7 +5,7 @@ import com.bridge351.interviewcalendarapi.slot.SlotService;
 import com.bridge351.interviewcalendarapi.slot.domain.SlotDTO;
 import com.bridge351.interviewcalendarapi.slot.domain.SlotEntity;
 import com.bridge351.interviewcalendarapi.slot.domain.SlotFilterDTO;
-import com.bridge351.interviewcalendarapi.slot.domain.SlotSimpleDTO;
+import com.bridge351.interviewcalendarapi.slot.domain.SlotRequestDTO;
 import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,20 +25,28 @@ public class SlotController implements SlotAPI {
     }
 
     @Override
-    public BasicResponse<List<SlotSimpleDTO>> findMatchedSlots(final SlotFilterDTO slotFilterDTO) {
-        final List<SlotEntity> matchedSlots = this.slotService.findMatchedSlots(slotFilterDTO);
-        return BasicResponse.withData(matchedSlots.stream()
-                .map(SlotSimpleDTO::ofEntity)
+    public BasicResponse<List<SlotDTO>> findSlotsByPerson(final Long personId) {
+        final List<SlotEntity> slots = this.slotService.findSlotsByPersonId(personId);
+        return BasicResponse.withData(slots.stream()
+                .map(SlotDTO::ofEntity)
                 .collect(Collectors.toList())
         );
     }
 
     @Override
-    public BasicResponse<SlotDTO> addSlot(final SlotDTO slotDTO) {
-        final SlotEntity slotEntity = this.slotService.addSlot(SlotEntity.ofDTO(slotDTO));
-        return BasicResponse.withDataAndMessage(
-                SlotSimpleDTO.ofEntity(slotEntity),
-                this.messageSource.getMessage("slot.added", null, Locale.getDefault())
+    public BasicResponse<List<SlotDTO>> findMatchedSlots(final SlotFilterDTO slotFilter) {
+        final List<SlotEntity> matchedSlots = this.slotService.findMatchedSlots(slotFilter);
+        return BasicResponse.withData(matchedSlots.stream()
+                .map(SlotDTO::ofEntity)
+                .collect(Collectors.toList())
+        );
+    }
+
+    @Override
+    public BasicResponse<Void> addSlots(final SlotRequestDTO slotRequest) {
+        slotRequest.getSlotDateTimeList().forEach(slotDateTimeDTO ->
+                this.slotService.addSlot(SlotEntity.ofSlotWithDateAndTime(slotRequest.getPersonId(), slotDateTimeDTO)));
+        return BasicResponse.ok(this.messageSource.getMessage("slot.added", null, Locale.getDefault())
         );
     }
 

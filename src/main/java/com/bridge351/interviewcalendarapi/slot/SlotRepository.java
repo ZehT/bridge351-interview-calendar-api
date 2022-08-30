@@ -13,6 +13,8 @@ import java.util.Optional;
 @Repository
 public interface SlotRepository extends JpaRepository<SlotEntity, Long> {
 
+    List<SlotEntity> findSlotByPersonId(final Long personId);
+
     Optional<SlotEntity> findSlotByPersonIdAndSlotDateAndSlotHour(final Long personId,
                                                                   final LocalDate slotDate,
                                                                   final int slotHour);
@@ -24,7 +26,7 @@ public interface SlotRepository extends JpaRepository<SlotEntity, Long> {
      *
      * @param candidateId    candidate id
      * @param interviewersID list of interviewers id
-     * @return
+     * @return matched slots
      */
     @Query(value = ""
             + "SELECT "
@@ -32,15 +34,15 @@ public interface SlotRepository extends JpaRepository<SlotEntity, Long> {
             + "FROM "
             + "  SLOT AS candidate_slot "
             + "  INNER JOIN PERSON candidate_person ON "
-            + "	     candidate_person.ID = candidate_slot.PERSON_ID "
-            + "	     AND candidate_person.TYPE = 1 "
+            + "      candidate_person.ID = candidate_slot.PERSON_ID "
+            + "      AND candidate_person.TYPE = 1 "
             + "  INNER JOIN SLOT AS interviewer_slot ON "
-            + "	     interviewer_slot.SLOT_DATE = candidate_slot.SLOT_DATE "
-            + "	     AND interviewer_slot.SLOT_HOUR = candidate_slot.SLOT_HOUR "
-            + "	     AND interviewer_slot.PERSON_ID IN (:interviewersID) "
+            + "      interviewer_slot.SLOT_DATE = candidate_slot.SLOT_DATE "
+            + "      AND interviewer_slot.SLOT_HOUR = candidate_slot.SLOT_HOUR "
+            + "      AND interviewer_slot.PERSON_ID IN (:interviewersID) "
             + "  INNER JOIN PERSON interviewer_person ON "
-            + "	     interviewer_person.ID = interviewer_slot.PERSON_ID "
-            + "	     AND interviewer_person.TYPE = 2 "
+            + "      interviewer_person.ID = interviewer_slot.PERSON_ID "
+            + "      AND interviewer_person.TYPE = 2 "
             + "WHERE "
             + "  candidate_slot.PERSON_ID = :candidateId "
             + "ORDER BY "
@@ -48,5 +50,4 @@ public interface SlotRepository extends JpaRepository<SlotEntity, Long> {
             nativeQuery = true)
     List<SlotEntity> findMatchedSlots(@Param("candidateId") final Long candidateId,
                                       @Param("interviewersID") final List<Long> interviewersID);
-
 }

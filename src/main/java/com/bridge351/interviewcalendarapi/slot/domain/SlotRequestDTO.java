@@ -10,20 +10,20 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * <p>Class that represents the Filters to Query for matched Slots.</p>
+ * <p>Class that represents a Slot of a Person to be created.</p>
  */
 @Data
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SlotFilterDTO {
+public class SlotRequestDTO {
 
-    @ApiModelProperty(value = "Candidate ID", example = "1", required = true)
+    @ApiModelProperty(value = "Candidate Or Interviewer ID", example = "1", required = true, position = 1)
     @NotNull(message = "commons.validation.mandatory.field")
-    private Long candidateId;
+    private Long personId;
 
-    @ApiModelProperty(value = "Interviewers ID", example = "[1, 2]", required = true)
+    @ApiModelProperty(value = "Candidate Or Interviewer List of Slots", required = true, position = 1)
     @NotNull(message = "commons.validation.mandatory.field")
-    private List<Long> interviewersID;
+    private List<SlotRequestDateTimeDTO> slotDateTimeList;
 
 }

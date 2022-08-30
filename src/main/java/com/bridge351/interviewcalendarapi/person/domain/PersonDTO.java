@@ -24,6 +24,7 @@ public class PersonDTO {
     @NotBlank(message = "commons.validation.mandatory.field")
     @Size(max = 50, message = "commons.validation.maxsize.fifty")
     private String name;
+
     @ApiModelProperty(value = "Candidate Or Interviewer name", example = "myEmail@gmail.com", required = true, position = 2)
     @NotBlank(message = "commons.validation.mandatory.field")
     @Email(message = "commons.validation.email.format")

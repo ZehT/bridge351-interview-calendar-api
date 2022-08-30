@@ -7,6 +7,7 @@
 
     <changeSet author="trein" id="1.1">
         <sqlFile path="classpath:/db/scripts/1.1/slot_alter_table.sql" splitStatements="false"/>
+        <sqlFile path="classpath:/db/scripts/1.1/seed_data.sql" splitStatements="false"/>
     </changeSet>
 
 </databaseChangeLog>
