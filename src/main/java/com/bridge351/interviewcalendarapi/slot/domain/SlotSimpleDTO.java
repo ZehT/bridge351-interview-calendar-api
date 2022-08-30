@@ -24,8 +24,8 @@ public class SlotSimpleDTO extends SlotDTO {
         return SlotSimpleDTO.builder()
                 .id(slotEntity.getId())
                 .personId(slotEntity.getPersonId())
-                .slotDate(slotEntity.getStartAt().toLocalDate())
-                .slotStartTime(slotEntity.getStartAt().getHour())
+                .slotDate(slotEntity.getSlotDate())
+                .slotHour(slotEntity.getSlotHour())
                 .build();
     }
 

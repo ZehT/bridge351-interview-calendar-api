@@ -11,8 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.LocalDate;
 
 @Data
 @Entity
@@ -30,15 +29,17 @@ public class SlotEntity {
     @Column(name = "PERSON_ID")
     private Long personId;
 
-    @Column(name = "START_AT")
-    private LocalDateTime startAt;
+    @Column(name = "SLOT_DATE")
+    private LocalDate slotDate;
+
+    @Column(name = "SLOT_HOUR")
+    private int slotHour;
 
     public static SlotEntity ofDTO(final SlotDTO slotDTO) {
-        final LocalTime time = LocalTime.of(slotDTO.getSlotStartTime(), 0, 0);
-        final LocalDateTime startAt = LocalDateTime.of(slotDTO.getSlotDate(), time);
         return SlotEntity.builder()
                 .personId(slotDTO.getPersonId())
-                .startAt(startAt)
+                .slotDate(slotDTO.getSlotDate())
+                .slotHour(slotDTO.getSlotHour())
                 .build();
     }
 

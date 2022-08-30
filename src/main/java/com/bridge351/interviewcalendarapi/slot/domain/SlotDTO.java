@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 /**
- * <p>Class that represents a Slot of a Personto be created.</p>
+ * <p>Class that represents a Slot of a Person to be created.</p>
  * <p>This is class exists to prevent the usage of the ID field on posts requests.</p>
  */
 @Data
@@ -33,10 +33,10 @@ public class SlotDTO {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @NotNull(message = "commons.validation.mandatory.field")
     private LocalDate slotDate;
-    @ApiModelProperty(value = "Slot Start Time - goes from 0 to 23", example = "13", required = true, position = 3)
+    @ApiModelProperty(value = "Slot Start Hour 24H format", example = "13", required = true, position = 3)
     @NotNull(message = "commons.validation.mandatory.field")
     @Min(value = 0, message = "commons.validation.minvalue.zero")
     @Max(value = 23, message = "commons.validation.maxvalue.twenty-three")
-    private int slotStartTime;
+    private int slotHour;
 
 }

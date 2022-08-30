@@ -40,7 +40,7 @@ public class SlotService {
     }
 
     private void validateTime(final SlotEntity slotEntity) {
-        this.slotRepository.findSlotByPersonIdAndStartAt(slotEntity.getPersonId(), slotEntity.getStartAt())
+        this.slotRepository.findSlotByPersonIdAndSlotDateAndSlotHour(slotEntity.getPersonId(), slotEntity.getSlotDate(), slotEntity.getSlotHour())
                 .ifPresent(person -> {
                     throw new SlotInvalidException();
                 });

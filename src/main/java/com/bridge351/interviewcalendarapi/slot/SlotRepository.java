@@ -6,30 +6,47 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface SlotRepository extends JpaRepository<SlotEntity, Long> {
 
-    Optional<SlotEntity> findSlotByPersonIdAndStartAt(final Long personId, final LocalDateTime startAt);
+    Optional<SlotEntity> findSlotByPersonIdAndSlotDateAndSlotHour(final Long personId,
+                                                                  final LocalDate slotDate,
+                                                                  final int slotHour);
 
+    /**
+     * <p>Native Query to find matched slots between candidate and interviewers.</p>
+     * <p>Aside from validating the Slot Date and Hour the query also makes sure that the candidate is from a candidate
+     * and the interviewers are from interviewers.</p>
+     *
+     * @param candidateId    candidate id
+     * @param interviewersID list of interviewers id
+     * @return
+     */
     @Query(value = ""
             + "SELECT "
-            + "  DISTINCT INTERVIEWER_SLOT.* "
+            + "  DISTINCT interviewer_slot.* "
             + "FROM "
-            + "  SLOT AS CANDIDATE_SLOT "
-            + "  INNER JOIN SLOT AS INTERVIEWER_SLOT ON "
-            + "    EXTRACT(HOUR FROM INTERVIEWER_SLOT.START_AT ) "
-            + "    = "
-            + "    EXTRACT(HOUR FROM CANDIDATE_SLOT.START_AT) "
-            + "  AND INTERVIEWER_SLOT.PERSON_ID IN (:interviewersID) "
+            + "  SLOT AS candidate_slot "
+            + "  INNER JOIN PERSON candidate_person ON "
+            + "	     candidate_person.ID = candidate_slot.PERSON_ID "
+            + "	     AND candidate_person.TYPE = 1 "
+            + "  INNER JOIN SLOT AS interviewer_slot ON "
+            + "	     interviewer_slot.SLOT_DATE = candidate_slot.SLOT_DATE "
+            + "	     AND interviewer_slot.SLOT_HOUR = candidate_slot.SLOT_HOUR "
+            + "	     AND interviewer_slot.PERSON_ID IN (:interviewersID) "
+            + "  INNER JOIN PERSON interviewer_person ON "
+            + "	     interviewer_person.ID = interviewer_slot.PERSON_ID "
+            + "	     AND interviewer_person.TYPE = 2 "
             + "WHERE "
-            + "  CANDIDATE_SLOT.PERSON_ID = :candidateId "
+            + "  candidate_slot.PERSON_ID = :candidateId "
             + "ORDER BY "
-            + "  INTERVIEWER_SLOT.PERSON_ID",
+            + "  interviewer_slot.PERSON_ID",
             nativeQuery = true)
-    List<SlotEntity> findMatchedSlots(@Param("candidateId") final Long candidateId, @Param("interviewersID") final List<Long> interviewersID);
+    List<SlotEntity> findMatchedSlots(@Param("candidateId") final Long candidateId,
+                                      @Param("interviewersID") final List<Long> interviewersID);
 
 }
