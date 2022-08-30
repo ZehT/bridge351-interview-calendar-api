@@ -39,4 +39,7 @@ public class PersonService {
         }
     }
 
+    public void findPersonById(final Long id) throws PersonNotFoundException {
+        this.personRepository.findById(id).orElseThrow(PersonNotFoundException::new);
+    }
 }
