@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Api(value = "Interviewer API", tags = "Interviewer API")
@@ -29,9 +30,10 @@ public interface InterviewerAPI {
     @ApiOperation(value = "Add Interviewer", nickname = "addInterviewer", response = BasicResponse.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Interviewer created", response = PersonDTO.class),
+            @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 500, message = "Server Error")
     })
     @PostMapping(value = "/interviewers/", produces = MediaType.APPLICATION_JSON_VALUE)
-    BasicResponse<PersonDTO> addInterviewer(@ApiParam(value = "Interviewer to create") @RequestBody final PersonDTO personDTO);
+    BasicResponse<PersonDTO> addInterviewer(@ApiParam(value = "Interviewer to create") @Valid @RequestBody final PersonDTO personDTO);
 
 }

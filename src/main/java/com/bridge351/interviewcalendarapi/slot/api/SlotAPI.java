@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Api(value = "Slot API", tags = "Slot API")
@@ -29,10 +30,11 @@ public interface SlotAPI {
     @ApiOperation(value = "Add Slot", nickname = "addSlot", response = BasicResponse.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Slot added", response = SlotDTO.class),
+            @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 422, message = "Unable to add Slot"),
             @ApiResponse(code = 500, message = "Server Error")
     })
     @PostMapping(value = "/slots/", produces = MediaType.APPLICATION_JSON_VALUE)
-    BasicResponse<SlotDTO> addSlot(@ApiParam(value = "Slot to add") @RequestBody final SlotDTO slotDTO);
+    BasicResponse<SlotDTO> addSlot(@ApiParam(value = "Slot to add") @Valid @RequestBody final SlotDTO slotDTO);
 
 }

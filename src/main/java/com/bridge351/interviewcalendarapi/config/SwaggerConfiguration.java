@@ -2,9 +2,11 @@ package com.bridge351.interviewcalendarapi.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -15,17 +17,26 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
+@Import(BeanValidatorPluginsConfiguration.class)
 public class SwaggerConfiguration extends WebMvcConfigurationSupport {
 
     private static final String API_NAME = "Interview Calendar API - Bridge 351";
 
     @Bean
     public Docket apiDocket() {
-        return (new Docket(DocumentationType.SWAGGER_2)).select().apis(RequestHandlerSelectors.withClassAnnotation(RestController.class)).paths(PathSelectors.any()).build().apiInfo(this.apiInfo());
+        return (new Docket(DocumentationType.SWAGGER_2))
+                .select()
+                .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
+                .paths(PathSelectors.any())
+                .build()
+                .apiInfo(this.apiInfo());
     }
 
     private ApiInfo apiInfo() {
-        return (new ApiInfoBuilder()).title(API_NAME).description(String.format("Documentation for %s", API_NAME)).build();
+        return (new ApiInfoBuilder())
+                .title(API_NAME)
+                .description(String.format("Documentation for %s", API_NAME))
+                .build();
     }
 
     @Override
