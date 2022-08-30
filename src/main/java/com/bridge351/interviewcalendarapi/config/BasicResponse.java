@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 /**
  * <p>Generic class that represent all the API Responses.</p>
  *
- * @param <T> - generic data
+ * @param <T> generic data
  */
 @Data
 @Builder
@@ -29,43 +29,55 @@ public class BasicResponse<T> {
     /**
      * <p>Response with data to be returned to the caller of the API.</p>
      *
-     * @param data - object to be returned
-     * @param <T>  - generic type
-     * @return - the basic response
+     * @param data object to be returned
+     * @param <T>  generic type
+     * @return the basic response
      */
     public static <T> BasicResponse<T> withData(final T data) {
-        final BasicResponse<T> result = new BasicResponse<>();
-        result.setData(data);
-        return result;
+        return BasicResponse.<T>builder()
+                .data(data)
+                .build();
     }
 
     /**
      * <p>Response with data and message to be returned to the caller of the API.</p>
      *
-     * @param data - object to be returned
-     * @param <T>  - generic type
-     * @return - the basic response
+     * @param data object to be returned
+     * @param <T>  generic type
+     * @return the basic response
      */
-    public static <T> BasicResponse<T> withDataAndMessage(final T data, final String msg) {
-        final BasicResponse<T> result = new BasicResponse<>();
-        result.setData(data);
-        result.setMessage(msg);
-        return result;
+    public static <T> BasicResponse<T> withDataAndMessage(final T data, final String message) {
+        return BasicResponse.<T>builder()
+                .message(message)
+                .data(data)
+                .build();
     }
 
     /**
      * <p>Failed Responsed to be returned to the call of the API.</p>
      *
-     * @param statusCode - status code of the error
-     * @param message    - msg of the error
-     * @return - the basic response
+     * @param statusCode status code of the error
+     * @param message    msg of the error
+     * @param <T>        generic type
+     * @return the basic response
      */
-    // TODO this is breaking the Generic Usability, since this is not generic, remove the fail method and build when needed
-    public static BasicResponse fail(final int statusCode, final String message) {
-        return BasicResponse.builder()
+    public static <T> BasicResponse<T> fail(final int statusCode, final String message, final T data) {
+        return BasicResponse.<T>builder()
                 .statusCode(statusCode)
                 .message(message)
+                .data(data)
                 .build();
+    }
+
+    /**
+     * <p>Failed Responsed to be returned to the call of the API.</p>
+     *
+     * @param statusCode status code of the error
+     * @param message    msg of the error
+     * @return the basic response
+     */
+    public static <T> BasicResponse<T> fail(final int statusCode, final String message) {
+        return fail(statusCode, message, null);
     }
 
 }
