@@ -1,5 +1,6 @@
 package com.bridge351.interviewcalendarapi.person;
 
+import com.bridge351.interviewcalendarapi.commons.exceptions.BusinessException;
 import com.bridge351.interviewcalendarapi.person.domain.PersonEntity;
 import com.bridge351.interviewcalendarapi.person.enums.PersonTypeEnum;
 import com.bridge351.interviewcalendarapi.person.exception.PersonNotFoundException;
@@ -20,6 +21,10 @@ public class PersonService {
 
     @Transactional
     public PersonEntity addPerson(final PersonEntity personEntity) {
+        this.personRepository.findPersonByEmail(personEntity.getEmail())
+                .ifPresent(person -> {
+                    throw new BusinessException("person.exception.person.already.exists");
+                });
         return this.personRepository.save(personEntity);
     }
 
@@ -42,4 +47,5 @@ public class PersonService {
     public void findPersonById(final Long id) throws PersonNotFoundException {
         this.personRepository.findById(id).orElseThrow(PersonNotFoundException::new);
     }
+
 }

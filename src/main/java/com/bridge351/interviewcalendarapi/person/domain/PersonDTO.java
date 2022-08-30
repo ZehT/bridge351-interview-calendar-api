@@ -2,41 +2,32 @@ package com.bridge351.interviewcalendarapi.person.domain;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 /**
- * <p>Class that represents an Interviewer or a Candidate.</p>
+ * <p>Class that represents an Interviewer or a Candidate to be created.</p>
+ * <p>This is class exists to prevent the usage of the ID field on posts requests.</p>
  */
 @Data
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 public class PersonDTO {
 
-    @ApiModelProperty(value = "Candidate Or Interviewer ID - ignored on post", example = "1")
-    private Long id;
-    @ApiModelProperty(value = "Candidate Or Interviewer name", example = "Trein", required = true)
+    @ApiModelProperty(value = "Candidate Or Interviewer name", example = "Trein", required = true, position = 1)
     @NotBlank(message = "commons.validation.mandatory.field")
     @Size(max = 50, message = "commons.validation.maxsize.fifty")
     private String name;
-    @ApiModelProperty(value = "Candidate Or Interviewer name", example = "myEmail@gmail.com", required = true)
+    @ApiModelProperty(value = "Candidate Or Interviewer name", example = "myEmail@gmail.com", required = true, position = 2)
     @NotBlank(message = "commons.validation.mandatory.field")
     @Email(message = "commons.validation.email.format")
     @Size(max = 50, message = "commons.validation.maxsize.fifty")
     private String email;
-
-    public static PersonDTO ofEntity(final PersonEntity personEntity) {
-        return PersonDTO.builder()
-                .id(personEntity.getId())
-                .name(personEntity.getName())
-                .email(personEntity.getEmail())
-                .build();
-    }
 
 }
