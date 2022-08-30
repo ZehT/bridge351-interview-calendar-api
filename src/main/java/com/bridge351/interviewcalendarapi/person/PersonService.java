@@ -1,8 +1,8 @@
 package com.bridge351.interviewcalendarapi.person;
 
-import com.bridge351.interviewcalendarapi.commons.exceptions.BusinessException;
 import com.bridge351.interviewcalendarapi.person.domain.PersonEntity;
 import com.bridge351.interviewcalendarapi.person.enums.PersonTypeEnum;
+import com.bridge351.interviewcalendarapi.person.exception.PersonAlreadyExistsException;
 import com.bridge351.interviewcalendarapi.person.exception.PersonNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +23,7 @@ public class PersonService {
     public PersonEntity addPerson(final PersonEntity personEntity) {
         this.personRepository.findPersonByEmail(personEntity.getEmail())
                 .ifPresent(person -> {
-                    throw new BusinessException("person.exception.person.already.exists");
+                    throw new PersonAlreadyExistsException();
                 });
         return this.personRepository.save(personEntity);
     }

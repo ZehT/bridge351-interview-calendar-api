@@ -2,9 +2,9 @@ package com.bridge351.interviewcalendarapi.person.api.candidate;
 
 import com.bridge351.interviewcalendarapi.config.BasicResponse;
 import com.bridge351.interviewcalendarapi.person.PersonService;
-import com.bridge351.interviewcalendarapi.person.domain.PersonSimpleDTO;
-import com.bridge351.interviewcalendarapi.person.domain.PersonEntity;
 import com.bridge351.interviewcalendarapi.person.domain.PersonDTO;
+import com.bridge351.interviewcalendarapi.person.domain.PersonEntity;
+import com.bridge351.interviewcalendarapi.person.domain.PersonSimpleDTO;
 import com.bridge351.interviewcalendarapi.person.enums.PersonTypeEnum;
 import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.RestController;
