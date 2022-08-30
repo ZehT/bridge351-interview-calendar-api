@@ -1,8 +1,8 @@
 package com.bridge351.interviewcalendarapi.person.api.candidate;
 
 import com.bridge351.interviewcalendarapi.config.BasicResponse;
-import com.bridge351.interviewcalendarapi.person.domain.PersonSimpleDTO;
 import com.bridge351.interviewcalendarapi.person.domain.PersonDTO;
+import com.bridge351.interviewcalendarapi.person.domain.PersonSimpleDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -32,6 +32,7 @@ public interface CandidateAPI {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Candidate created", response = PersonSimpleDTO.class),
             @ApiResponse(code = 400, message = "Bad Request"),
+            @ApiResponse(code = 422, message = "Unable to add Candidate"),
             @ApiResponse(code = 500, message = "Server Error")
     })
     @PostMapping(value = "/candidates/", produces = MediaType.APPLICATION_JSON_VALUE)
