@@ -7,6 +7,7 @@ import com.bridge351.interviewcalendarapi.slot.domain.SlotFilterDTO;
 import com.bridge351.interviewcalendarapi.slot.exception.SlotInvalidException;
 import com.bridge351.interviewcalendarapi.slot.exception.SlotInvalidPersonException;
 import com.bridge351.interviewcalendarapi.slot.exception.SlotMatchedNotFoundException;
+import com.bridge351.interviewcalendarapi.slot.exception.SlotsByPersonNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -24,11 +25,19 @@ public class SlotService {
         this.personService = personService;
     }
 
+    public List<SlotEntity> findSlotsByPersonId(final Long personId) {
+        final List<SlotEntity> slots = this.slotRepository.findSlotByPersonId(personId);
+        if (CollectionUtils.isEmpty(slots)) {
+            throw new SlotsByPersonNotFoundException();
+        }
+        return slots;
+    }
+
     @Transactional
-    public SlotEntity addSlot(final SlotEntity slotEntity) {
-        validatePerson(slotEntity.getPersonId());
+    public void addSlot(final SlotEntity slotEntity) {
+        validatePerson(slotEntity.getPerson().getId());
         validateTime(slotEntity);
-        return this.slotRepository.save(slotEntity);
+        this.slotRepository.save(slotEntity);
     }
 
     private void validatePerson(final Long personId) {
@@ -40,14 +49,14 @@ public class SlotService {
     }
 
     private void validateTime(final SlotEntity slotEntity) {
-        this.slotRepository.findSlotByPersonIdAndStartAt(slotEntity.getPersonId(), slotEntity.getStartAt())
+        this.slotRepository.findSlotByPersonIdAndSlotDateAndSlotHour(slotEntity.getPerson().getId(), slotEntity.getSlotDate(), slotEntity.getSlotHour())
                 .ifPresent(person -> {
                     throw new SlotInvalidException();
                 });
     }
 
-    public List<SlotEntity> findMatchedSlots(final SlotFilterDTO slotFilterDTO) {
-        final List<SlotEntity> matchedSlots = this.slotRepository.findMatchedSlots(slotFilterDTO.getCandidateId(), slotFilterDTO.getInterviewersID());
+    public List<SlotEntity> findMatchedSlots(final SlotFilterDTO slotFilter) {
+        final List<SlotEntity> matchedSlots = this.slotRepository.findMatchedSlots(slotFilter.getCandidateId(), slotFilter.getInterviewersID());
         if (CollectionUtils.isEmpty(matchedSlots)) {
             throw new SlotMatchedNotFoundException();
         }

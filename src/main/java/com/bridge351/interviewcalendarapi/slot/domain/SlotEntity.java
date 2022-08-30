@@ -1,5 +1,6 @@
 package com.bridge351.interviewcalendarapi.slot.domain;
 
+import com.bridge351.interviewcalendarapi.person.domain.PersonEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,9 +11,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.LocalDate;
 
 @Data
 @Entity
@@ -27,18 +29,24 @@ public class SlotEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "PERSON_ID")
-    private Long personId;
+    @ManyToOne
+    @JoinColumn(name = "PERSON_ID")
+    private PersonEntity person;
 
-    @Column(name = "START_AT")
-    private LocalDateTime startAt;
+    @Column(name = "SLOT_DATE")
+    private LocalDate slotDate;
 
-    public static SlotEntity ofDTO(final SlotDTO slotDTO) {
-        final LocalTime time = LocalTime.of(slotDTO.getSlotStartTime(), 0, 0);
-        final LocalDateTime startAt = LocalDateTime.of(slotDTO.getSlotDate(), time);
+    @Column(name = "SLOT_HOUR")
+    private int slotHour;
+
+    public static SlotEntity ofSlotWithDateAndTime(final Long personId, final SlotRequestDateTimeDTO slotRequestDateTime) {
+        final PersonEntity person = PersonEntity.builder()
+                .id(personId)
+                .build();
         return SlotEntity.builder()
-                .personId(slotDTO.getPersonId())
-                .startAt(startAt)
+                .person(person)
+                .slotDate(slotRequestDateTime.getSlotDate())
+                .slotHour(slotRequestDateTime.getSlotHour())
                 .build();
     }
 

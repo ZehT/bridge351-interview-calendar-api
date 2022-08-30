@@ -27,6 +27,18 @@ public class BasicResponse<T> {
     private T data;
 
     /**
+     * <p>Response without data when there is no need to return data to the caller of the API.</p>
+     *
+     * @param message message to be returned
+     * @return response ok
+     */
+    public static <T> BasicResponse<T> ok(final String message) {
+        return BasicResponse.<T>builder()
+                .message(message)
+                .build();
+    }
+
+    /**
      * <p>Response with data to be returned to the caller of the API.</p>
      *
      * @param data object to be returned
@@ -42,8 +54,9 @@ public class BasicResponse<T> {
     /**
      * <p>Response with data and message to be returned to the caller of the API.</p>
      *
-     * @param data object to be returned
-     * @param <T>  generic type
+     * @param data    object to be returned
+     * @param <T>     generic type
+     * @param message message to be returned
      * @return the basic response
      */
     public static <T> BasicResponse<T> withDataAndMessage(final T data, final String message) {
@@ -54,7 +67,7 @@ public class BasicResponse<T> {
     }
 
     /**
-     * <p>Failed Responsed to be returned to the call of the API.</p>
+     * <p>Failed Response to be returned to the call of the API.</p>
      *
      * @param statusCode status code of the error
      * @param message    msg of the error
@@ -70,7 +83,7 @@ public class BasicResponse<T> {
     }
 
     /**
-     * <p>Failed Responsed to be returned to the call of the API.</p>
+     * <p>Failed Response to be returned to the call of the API.</p>
      *
      * @param statusCode status code of the error
      * @param message    msg of the error
