@@ -1,8 +1,8 @@
 package com.bridge351.interviewcalendarapi.person.api.candidate;
 
 import com.bridge351.interviewcalendarapi.config.BasicResponse;
+import com.bridge351.interviewcalendarapi.person.domain.PersonRequestDTO;
 import com.bridge351.interviewcalendarapi.person.domain.PersonDTO;
-import com.bridge351.interviewcalendarapi.person.domain.PersonSimpleDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -21,21 +21,21 @@ public interface CandidateAPI {
 
     @ApiOperation(value = "List of Candidates", nickname = "getCandidates", response = BasicResponse.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "", response = PersonSimpleDTO.class, responseContainer = "list"),
+            @ApiResponse(code = 200, message = "", response = PersonDTO.class, responseContainer = "list"),
             @ApiResponse(code = 200, message = "No Candidates Found"),
             @ApiResponse(code = 500, message = "Server Error")
     })
     @GetMapping(value = "/candidates/", produces = MediaType.APPLICATION_JSON_VALUE)
-    BasicResponse<List<PersonSimpleDTO>> getCandidates();
+    BasicResponse<List<PersonDTO>> getCandidates();
 
     @ApiOperation(value = "Add Candidate", nickname = "addCandidate", response = BasicResponse.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Candidate created", response = PersonSimpleDTO.class),
+            @ApiResponse(code = 200, message = "Candidate created", response = PersonDTO.class),
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 422, message = "Unable to add Candidate"),
             @ApiResponse(code = 500, message = "Server Error")
     })
     @PostMapping(value = "/candidates/", produces = MediaType.APPLICATION_JSON_VALUE)
-    BasicResponse<PersonSimpleDTO> addCandidate(@ApiParam(value = "Candidate to create") @Valid @RequestBody final PersonDTO personDTO);
+    BasicResponse<PersonDTO> addCandidate(@ApiParam(value = "Candidate to create") @Valid @RequestBody final PersonRequestDTO personRequest);
 
 }

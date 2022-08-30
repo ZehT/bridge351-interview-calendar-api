@@ -4,7 +4,7 @@ import com.bridge351.interviewcalendarapi.config.BasicResponse;
 import com.bridge351.interviewcalendarapi.person.PersonService;
 import com.bridge351.interviewcalendarapi.person.domain.PersonDTO;
 import com.bridge351.interviewcalendarapi.person.domain.PersonEntity;
-import com.bridge351.interviewcalendarapi.person.domain.PersonSimpleDTO;
+import com.bridge351.interviewcalendarapi.person.domain.PersonRequestDTO;
 import com.bridge351.interviewcalendarapi.person.enums.PersonTypeEnum;
 import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,18 +25,18 @@ public class InterviewerController implements InterviewerAPI {
     }
 
     @Override
-    public BasicResponse<List<PersonSimpleDTO>> getInterviewers() {
-        final List<PersonEntity> personsEntity = this.personService.findAllPersonsByType(PersonTypeEnum.INTERVIEWER.getType());
-        return BasicResponse.withData(personsEntity.stream()
-                .map(PersonSimpleDTO::ofEntity)
+    public BasicResponse<List<PersonDTO>> getInterviewers() {
+        final List<PersonEntity> persons = this.personService.findAllPersonsByType(PersonTypeEnum.INTERVIEWER.getType());
+        return BasicResponse.withData(persons.stream()
+                .map(PersonDTO::ofEntity)
                 .collect(Collectors.toList()));
     }
 
     @Override
-    public BasicResponse<PersonSimpleDTO> addInterviewer(final PersonDTO personDTO) {
-        final PersonEntity personEntity = this.personService.addPerson(PersonEntity.ofDto(personDTO, PersonTypeEnum.INTERVIEWER.getType()));
+    public BasicResponse<PersonDTO> addInterviewer(final PersonRequestDTO personRequest) {
+        final PersonEntity person = this.personService.addPerson(PersonEntity.ofDto(personRequest, PersonTypeEnum.INTERVIEWER.getType()));
         return BasicResponse.withDataAndMessage(
-                PersonSimpleDTO.ofEntity(personEntity),
+                PersonDTO.ofEntity(person),
                 this.messageSource.getMessage("person.interviewer.created", null, Locale.getDefault())
         );
     }

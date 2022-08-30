@@ -2,9 +2,9 @@ package com.bridge351.interviewcalendarapi.person.api.candidate;
 
 import com.bridge351.interviewcalendarapi.config.BasicResponse;
 import com.bridge351.interviewcalendarapi.person.PersonService;
-import com.bridge351.interviewcalendarapi.person.domain.PersonDTO;
+import com.bridge351.interviewcalendarapi.person.domain.PersonRequestDTO;
 import com.bridge351.interviewcalendarapi.person.domain.PersonEntity;
-import com.bridge351.interviewcalendarapi.person.domain.PersonSimpleDTO;
+import com.bridge351.interviewcalendarapi.person.domain.PersonDTO;
 import com.bridge351.interviewcalendarapi.person.enums.PersonTypeEnum;
 import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,18 +25,18 @@ public class CandidateController implements CandidateAPI {
     }
 
     @Override
-    public BasicResponse<List<PersonSimpleDTO>> getCandidates() {
-        final List<PersonEntity> personsEntity = this.personService.findAllPersonsByType(PersonTypeEnum.CANDIDATE.getType());
-        return BasicResponse.withData(personsEntity.stream()
-                .map(PersonSimpleDTO::ofEntity)
+    public BasicResponse<List<PersonDTO>> getCandidates() {
+        final List<PersonEntity> persons = this.personService.findAllPersonsByType(PersonTypeEnum.CANDIDATE.getType());
+        return BasicResponse.withData(persons.stream()
+                .map(PersonDTO::ofEntity)
                 .collect(Collectors.toList()));
     }
 
     @Override
-    public BasicResponse<PersonSimpleDTO> addCandidate(final PersonDTO personDTO) {
-        final PersonEntity personEntity = this.personService.addPerson(PersonEntity.ofDto(personDTO, PersonTypeEnum.CANDIDATE.getType()));
+    public BasicResponse<PersonDTO> addCandidate(final PersonRequestDTO personRequest) {
+        final PersonEntity person = this.personService.addPerson(PersonEntity.ofDto(personRequest, PersonTypeEnum.CANDIDATE.getType()));
         return BasicResponse.withDataAndMessage(
-                PersonSimpleDTO.ofEntity(personEntity),
+                PersonDTO.ofEntity(person),
                 this.messageSource.getMessage("person.candidate.created", null, Locale.getDefault())
         );
     }

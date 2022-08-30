@@ -20,22 +20,22 @@ public class PersonService {
     }
 
     @Transactional
-    public PersonEntity addPerson(final PersonEntity personEntity) {
-        this.personRepository.findPersonByEmail(personEntity.getEmail())
-                .ifPresent(person -> {
+    public PersonEntity addPerson(final PersonEntity person) {
+        this.personRepository.findPersonByEmail(person.getEmail())
+                .ifPresent(found -> {
                     throw new PersonAlreadyExistsException();
                 });
-        return this.personRepository.save(personEntity);
+        return this.personRepository.save(person);
     }
 
     public List<PersonEntity> findAllPersonsByType(final int type) {
-        final List<PersonEntity> personsEntity = this.personRepository.findAllPersonsByType(type);
-        validatePersonsBeenFound(personsEntity, type);
-        return personsEntity;
+        final List<PersonEntity> persons = this.personRepository.findAllPersonsByType(type);
+        validatePersonsBeenFound(persons, type);
+        return persons;
     }
 
-    private void validatePersonsBeenFound(final List<PersonEntity> personsEntity, final int type) {
-        if (CollectionUtils.isEmpty(personsEntity)) {
+    private void validatePersonsBeenFound(final List<PersonEntity> persons, final int type) {
+        if (CollectionUtils.isEmpty(persons)) {
             String notFoundMsg = "person.exception.candidate.not.found";
             if (PersonTypeEnum.INTERVIEWER.getType() == type) {
                 notFoundMsg = "person.exception.interviewer.not.found";
