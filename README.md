@@ -10,7 +10,9 @@ There is 3 users that are "shipped" with in memory database:
 - Carl: As Candidate
 - David and Ines: As Interviewers
 
-More Users can be add using the POST defined in User Service
+They also have some Slots already available.
+
+More Users and Slots can be add using the POST defined in User Service
 
 ## Data Base
 The Data Base is fairly simple, and described as below:
@@ -31,16 +33,16 @@ Before checking out the project, be sure to have:
 First things first: clone the project. Use command line or your Git UI.
 - ```git clone https://github.com/ZehT/bridge351-interview-calendar-api.git ```
 
-Since the project is already configured to execute in a default Maven profile, all you have to do is run the project. But first make sure you have the 8080 port not in use first. After that you can:
+Since the project is already configured to be executed in a Maven profile, all you have to do is run the project. But first make sure you have the 8080 port not in use. After that you can run as:
 
 #### IDE
-Import the project in your loved IDE and then running the InterviewCalendarApiApplication class
+Import the project in your loved IDE, update dependencies with ``` mvn clean install ``` in the terminal or with the help of the IDE's UI, and run the InterviewCalendarApiApplication class
 
 #### Command Line
 Run through command line in the root directory where you've check out the project: ``` mvn spring-boot:run ```
 
 #### Docker
-Docker is the optional way, you must have it installed in your machine. If you have, you build the image and run:
+Docker is the optional way. You must have it installed in your machine. If you have, build the image and run:
 
 - build: ```docker build -t interview-calendar-api .```
 - run: ```docker run -p 8080:8080 interview-calendar-api```  
