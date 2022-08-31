@@ -1,6 +1,8 @@
 package com.bridge351.interviewcalendarapi.slot.domain;
 
+import com.bridge351.interviewcalendarapi.commons.serializer.LocalDateDeserializer;
 import com.bridge351.interviewcalendarapi.commons.serializer.LocalDateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -26,6 +28,7 @@ public class SlotDTO {
     private String name;
 
     @ApiModelProperty(value = "Slot Date", example = "08/30/2022", position = 2)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate slotDate;
 

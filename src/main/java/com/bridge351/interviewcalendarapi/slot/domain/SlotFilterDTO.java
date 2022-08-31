@@ -24,6 +24,6 @@ public class SlotFilterDTO {
 
     @ApiModelProperty(value = "Interviewers ID", example = "[1, 2]", required = true)
     @NotNull(message = "commons.validation.mandatory.field")
-    private List<Long> interviewersID;
+    private List<Long> interviewersId;
 
 }

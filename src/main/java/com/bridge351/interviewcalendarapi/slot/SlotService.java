@@ -56,7 +56,7 @@ public class SlotService {
     }
 
     public List<SlotEntity> findMatchedSlots(final SlotFilterDTO slotFilter) {
-        final List<SlotEntity> matchedSlots = this.slotRepository.findMatchedSlots(slotFilter.getCandidateId(), slotFilter.getInterviewersID());
+        final List<SlotEntity> matchedSlots = this.slotRepository.findMatchedSlots(slotFilter.getCandidateId(), slotFilter.getInterviewersId());
         if (CollectionUtils.isEmpty(matchedSlots)) {
             throw new SlotMatchedNotFoundException();
         }

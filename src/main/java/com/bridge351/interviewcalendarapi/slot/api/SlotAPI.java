@@ -41,7 +41,7 @@ public interface SlotAPI {
     })
     @GetMapping(value = "/slots/", produces = MediaType.APPLICATION_JSON_VALUE)
     BasicResponse<List<SlotDTO>> findMatchedSlots(@ApiParam(value = "Filters", required = true)
-                                                  @ModelAttribute final SlotFilterDTO slotFilter);
+                                                  @Valid @ModelAttribute final SlotFilterDTO slotFilter);
 
     @ApiOperation(value = "Add Slots", nickname = "addSlots", response = BasicResponse.class)
     @ApiResponses(value = {
