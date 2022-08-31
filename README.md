@@ -2,11 +2,11 @@
 Project for a possible interview with the current coding team!
 
 ## About the Project
-The Interview Calendar API consists in single API of two services:
+The Interview Calendar API consists in a single API of two services:
 - User Service
 - Slot Service
 
-There is 3 users that are "shipped" with in memory database:
+There are 3 Users that are "shipped" with in memory database:
 - Carl: As Candidate
 - David and Ines: As Interviewers
 
