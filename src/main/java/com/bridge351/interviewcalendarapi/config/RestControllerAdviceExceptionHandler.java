@@ -19,11 +19,11 @@ import java.util.Map;
 
 @RestControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class ControllerAdviceExceptionHandler {
+public class RestControllerAdviceExceptionHandler {
 
     private final MessageSource messageSource;
 
-    public ControllerAdviceExceptionHandler(final MessageSource messageSource) {
+    public RestControllerAdviceExceptionHandler(final MessageSource messageSource) {
         this.messageSource = messageSource;
     }
 

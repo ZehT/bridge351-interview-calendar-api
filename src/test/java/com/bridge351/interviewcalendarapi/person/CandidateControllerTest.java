@@ -24,6 +24,9 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * <p>Class that represents some Behavior Tests mocking everything with Mockito always expecting desired results.</p>
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class CandidateControllerTest {
 
