@@ -14,8 +14,8 @@ They also have some Slots already available.
 
 More Users and Slots can be add using the API.
 
-## Data Base
-The Data Base is fairly simple, and described as below:
+## Database
+The Database is fairly simple, and described as below:
 > ![DB Structure](https://github.com/ZehT/bridge351-interview-calendar-api/blob/main/src/main/resources/db/db_structure.png?raw=true)
 
 ## Executing the Project
