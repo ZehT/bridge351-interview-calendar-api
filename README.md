@@ -12,7 +12,7 @@ There is 3 users that are "shipped" with in memory database:
 
 They also have some Slots already available.
 
-More Users and Slots can be add using the POST defined in User Service
+More Users and Slots can be add using the API.
 
 ## Data Base
 The Data Base is fairly simple, and described as below:
