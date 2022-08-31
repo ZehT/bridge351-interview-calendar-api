@@ -14,7 +14,7 @@ More Users can be add using the POST defined in User Service
 
 ## Data Base
 The Data Base is fairly simple, and described as below:
-> ![DB Structure](https://github.com/ZehT/bridge351-interview-calendar-api/tree/main/src/main/resources/db/db_structure.png)
+> ![DB Structure](https://github.com/ZehT/bridge351-interview-calendar-api/blob/main/src/main/resources/db/db_structure.png?raw=true)
 
 ## Executing the Project
 ### Pre-Requirements
