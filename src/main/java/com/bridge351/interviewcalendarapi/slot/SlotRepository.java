@@ -13,11 +13,11 @@ import java.util.Optional;
 @Repository
 public interface SlotRepository extends JpaRepository<SlotEntity, Long> {
 
-    List<SlotEntity> findSlotByPersonId(final Long personId);
+    List<SlotEntity> findSlotByUserId(final Long userId);
 
-    Optional<SlotEntity> findSlotByPersonIdAndSlotDateAndSlotHour(final Long personId,
-                                                                  final LocalDate slotDate,
-                                                                  final int slotHour);
+    Optional<SlotEntity> findSlotByUserIdAndSlotDateAndSlotHour(final Long userId,
+                                                                final LocalDate slotDate,
+                                                                final int slotHour);
 
     /**
      * <p>Native Query to find matched slots between candidate and interviewers.</p>
@@ -33,20 +33,20 @@ public interface SlotRepository extends JpaRepository<SlotEntity, Long> {
             + "  DISTINCT interviewer_slot.* "
             + "FROM "
             + "  SLOT AS candidate_slot "
-            + "  INNER JOIN PERSON candidate_person ON "
-            + "      candidate_person.ID = candidate_slot.PERSON_ID "
-            + "      AND candidate_person.TYPE = 1 "
+            + "  INNER JOIN USER candidate ON "
+            + "      candidate.ID = candidate_slot.USER_ID "
+            + "      AND candidate.TYPE = 1 "
             + "  INNER JOIN SLOT AS interviewer_slot ON "
             + "      interviewer_slot.SLOT_DATE = candidate_slot.SLOT_DATE "
             + "      AND interviewer_slot.SLOT_HOUR = candidate_slot.SLOT_HOUR "
-            + "      AND interviewer_slot.PERSON_ID IN (:interviewersID) "
-            + "  INNER JOIN PERSON interviewer_person ON "
-            + "      interviewer_person.ID = interviewer_slot.PERSON_ID "
-            + "      AND interviewer_person.TYPE = 2 "
+            + "      AND interviewer_slot.USER_ID IN (:interviewersID) "
+            + "  INNER JOIN USER interviewer ON "
+            + "      interviewer.ID = interviewer_slot.USER_ID "
+            + "      AND interviewer.TYPE = 2 "
             + "WHERE "
-            + "  candidate_slot.PERSON_ID = :candidateId "
+            + "  candidate_slot.USER_ID = :candidateId "
             + "ORDER BY "
-            + "  interviewer_slot.PERSON_ID",
+            + "  interviewer_slot.USER_ID",
             nativeQuery = true)
     List<SlotEntity> findMatchedSlots(@Param("candidateId") final Long candidateId,
                                       @Param("interviewersID") final List<Long> interviewersID);

@@ -1,7 +1,6 @@
-package com.bridge351.interviewcalendarapi.slot.api;
+package com.bridge351.interviewcalendarapi.slot;
 
 import com.bridge351.interviewcalendarapi.config.BasicResponse;
-import com.bridge351.interviewcalendarapi.slot.SlotService;
 import com.bridge351.interviewcalendarapi.slot.domain.SlotDTO;
 import com.bridge351.interviewcalendarapi.slot.domain.SlotEntity;
 import com.bridge351.interviewcalendarapi.slot.domain.SlotFilterDTO;
@@ -25,8 +24,8 @@ public class SlotController implements SlotAPI {
     }
 
     @Override
-    public BasicResponse<List<SlotDTO>> findSlotsByPerson(final Long personId) {
-        final List<SlotEntity> slots = this.slotService.findSlotsByPersonId(personId);
+    public BasicResponse<List<SlotDTO>> findSlotsByUser(final Long userId) {
+        final List<SlotEntity> slots = this.slotService.findSlotsByUserId(userId);
         return BasicResponse.withData(slots.stream()
                 .map(SlotDTO::ofEntity)
                 .collect(Collectors.toList())
@@ -45,7 +44,7 @@ public class SlotController implements SlotAPI {
     @Override
     public BasicResponse<Void> addSlots(final SlotRequestDTO slotRequest) {
         slotRequest.getSlotDateTimeList().forEach(slotDateTimeDTO ->
-                this.slotService.addSlot(SlotEntity.ofSlotWithDateAndTime(slotRequest.getPersonId(), slotDateTimeDTO)));
+                this.slotService.addSlot(SlotEntity.ofSlotWithDateAndTime(slotRequest.getUserId(), slotDateTimeDTO)));
         return BasicResponse.ok(this.messageSource.getMessage("slot.added", null, Locale.getDefault())
         );
     }

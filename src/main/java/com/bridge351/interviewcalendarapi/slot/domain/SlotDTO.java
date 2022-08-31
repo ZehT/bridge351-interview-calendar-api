@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 /**
- * <p>Class that represents a Slot of a Person.</p>
+ * <p>Class that represents a Slot of a User.</p>
  */
 @Data
 @Builder
@@ -38,7 +38,7 @@ public class SlotDTO {
     public static SlotDTO ofEntity(final SlotEntity slotEntity) {
         return SlotDTO.builder()
                 .id(slotEntity.getId())
-                .name(slotEntity.getPerson().getName())
+                .name(slotEntity.getUser().getName())
                 .slotDate(slotEntity.getSlotDate())
                 .slotHour(slotEntity.getSlotHour())
                 .build();

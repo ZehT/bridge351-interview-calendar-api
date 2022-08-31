@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * <p>Class that represents a Slot of a Person to be created.</p>
+ * <p>Class that represents a Slot of a User to be created.</p>
  */
 @Data
 @SuperBuilder
@@ -20,7 +20,7 @@ public class SlotRequestDTO {
 
     @ApiModelProperty(value = "Candidate Or Interviewer ID", example = "1", required = true, position = 1)
     @NotNull(message = "commons.validation.mandatory.field")
-    private Long personId;
+    private Long userId;
 
     @ApiModelProperty(value = "Candidate Or Interviewer List of Slots", required = true, position = 1)
     @NotNull(message = "commons.validation.mandatory.field")

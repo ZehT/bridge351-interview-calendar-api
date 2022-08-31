@@ -29,17 +29,17 @@ public class RestControllerAdviceExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(code = HttpStatus.OK)
-    public ResponseEntity<BasicResponse<Object>> notFoundException(final NotFoundException notFoundException) {
-        final BasicResponse<Object> basicResponse = BasicResponse.fail(HttpStatus.OK.value(),
+    public ResponseEntity<BasicResponse<Void>> notFoundException(final NotFoundException notFoundException) {
+        final BasicResponse<Void> basicResponse = BasicResponse.fail(HttpStatus.OK.value(),
                 this.messageSource.getMessage(notFoundException.getMessage(), null, Locale.getDefault()));
         return ResponseEntity.status(HttpStatus.OK).body(basicResponse);
     }
 
     @ExceptionHandler(BusinessException.class)
     @ResponseStatus(code = HttpStatus.UNPROCESSABLE_ENTITY)
-    public ResponseEntity<BasicResponse<Object>> slotException(final BusinessException slotException) {
-        final BasicResponse<Object> basicResponse = BasicResponse.fail(HttpStatus.UNPROCESSABLE_ENTITY.value(),
-                this.messageSource.getMessage(slotException.getMessage(), null, Locale.getDefault()));
+    public ResponseEntity<BasicResponse<Void>> businessException(final BusinessException businessException) {
+        final BasicResponse<Void> basicResponse = BasicResponse.fail(HttpStatus.UNPROCESSABLE_ENTITY.value(),
+                this.messageSource.getMessage(businessException.getMessage(), null, Locale.getDefault()));
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(basicResponse);
     }
 
