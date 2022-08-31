@@ -1,4 +1,4 @@
-package com.bridge351.interviewcalendarapi.person.domain;
+package com.bridge351.interviewcalendarapi.user.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,10 +15,10 @@ import javax.persistence.Table;
 @Data
 @Entity
 @Builder
-@Table(name = "PERSON")
+@Table(name = "USER")
 @NoArgsConstructor
 @AllArgsConstructor
-public class PersonEntity {
+public class UserEntity {
 
     @Id
     @Column(name = "ID")
@@ -34,11 +34,11 @@ public class PersonEntity {
     @Column(name = "TYPE")
     private int type;
 
-    public static PersonEntity ofDto(final PersonRequestDTO personRequest, final int type) {
-        return PersonEntity.builder()
-                .name(personRequest.getName())
-                .email(personRequest.getEmail())
-                .type(type)
+    public static UserEntity ofDto(final UserRequestDTO userRequest) {
+        return UserEntity.builder()
+                .name(userRequest.getName())
+                .email(userRequest.getEmail())
+                .type(userRequest.getType())
                 .build();
     }
 

@@ -1,6 +1,6 @@
 package com.bridge351.interviewcalendarapi.slot.domain;
 
-import com.bridge351.interviewcalendarapi.person.domain.PersonEntity;
+import com.bridge351.interviewcalendarapi.user.domain.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,8 +30,8 @@ public class SlotEntity {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "PERSON_ID")
-    private PersonEntity person;
+    @JoinColumn(name = "USER_ID")
+    private UserEntity user;
 
     @Column(name = "SLOT_DATE")
     private LocalDate slotDate;
@@ -39,12 +39,12 @@ public class SlotEntity {
     @Column(name = "SLOT_HOUR")
     private int slotHour;
 
-    public static SlotEntity ofSlotWithDateAndTime(final Long personId, final SlotRequestDateTimeDTO slotRequestDateTime) {
-        final PersonEntity person = PersonEntity.builder()
-                .id(personId)
+    public static SlotEntity ofSlotWithDateAndTime(final Long userId, final SlotRequestDateTimeDTO slotRequestDateTime) {
+        final UserEntity user = UserEntity.builder()
+                .id(userId)
                 .build();
         return SlotEntity.builder()
-                .person(person)
+                .user(user)
                 .slotDate(slotRequestDateTime.getSlotDate())
                 .slotHour(slotRequestDateTime.getSlotHour())
                 .build();

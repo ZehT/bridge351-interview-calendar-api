@@ -37,9 +37,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = InterviewCalendarApiApplication.class)
 public class SlotControllerIntegrationTests {
 
-    private MockMvc mockMvc;
     final ObjectMapper objectMapper = new ObjectMapper();
-
+    private MockMvc mockMvc;
     @Autowired
     private WebApplicationContext webApplicationContext;
 
@@ -49,13 +48,13 @@ public class SlotControllerIntegrationTests {
     }
 
     @Test
-    public void givenPersonWhenFindSlotsByPersonThenReturnPerson() throws Exception {
+    public void givenUserWhenFindSlotsByUserThenReturnUser() throws Exception {
         final SlotDTO expected = SlotDTO.builder()
                 .name("Carl")
                 .build();
         final MvcResult mvcResult = this.mockMvc.perform(
-                        MockMvcRequestBuilders.get("/slots/person/")
-                                .param("personId", "2")
+                        MockMvcRequestBuilders.get("/slots/user/")
+                                .param("userId", "2")
                                 .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
         final MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
@@ -67,7 +66,7 @@ public class SlotControllerIntegrationTests {
     }
 
     @Test
-    public void givenPersonAndSlotsWhenAddSlotsThenValidateSucess() throws Exception {
+    public void givenUserAndSlotsWhenAddSlotsThenValidateSucess() throws Exception {
         final List<SlotRequestDateTimeDTO> slotDateTimeList = new ArrayList<>();
         final SlotRequestDateTimeDTO slotDateTime = SlotRequestDateTimeDTO.builder()
                 .slotDate(LocalDate.of(2022, 1, 2))
@@ -75,7 +74,7 @@ public class SlotControllerIntegrationTests {
                 .build();
         slotDateTimeList.add(slotDateTime);
         final SlotRequestDTO slotRequest = SlotRequestDTO.builder()
-                .personId(2L)
+                .userId(2L)
                 .slotDateTimeList(slotDateTimeList)
                 .build();
         final String body = objectMapper.writeValueAsString(slotRequest);
@@ -106,7 +105,7 @@ public class SlotControllerIntegrationTests {
     }
 
     @Test
-    public void givenPersonAndInterviewersWhenFindMatchedSlotsThenExpectTwoMatches() throws Exception {
+    public void givenUserAndInterviewersWhenFindMatchedSlotsThenExpectTwoMatches() throws Exception {
         final int expectedSize = 2;
         final MvcResult mvcResult = this.mockMvc.perform(
                         MockMvcRequestBuilders.get("/slots/")

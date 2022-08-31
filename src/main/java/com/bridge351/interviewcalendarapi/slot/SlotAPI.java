@@ -1,4 +1,4 @@
-package com.bridge351.interviewcalendarapi.slot.api;
+package com.bridge351.interviewcalendarapi.slot;
 
 import com.bridge351.interviewcalendarapi.config.BasicResponse;
 import com.bridge351.interviewcalendarapi.slot.domain.SlotDTO;
@@ -19,18 +19,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.validation.Valid;
 import java.util.List;
 
-@Api(value = "Slot API", tags = "Slot API")
+@Api(value = "Slot Service", tags = "Slot Service")
 public interface SlotAPI {
 
-    @ApiOperation(value = "Find Slots for a Person", nickname = "findSlotsByPerson", response = BasicResponse.class)
+    @ApiOperation(value = "Find Slots for a User", nickname = "findSlotsByUser", response = BasicResponse.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = SlotDTO.class, responseContainer = "list"),
             @ApiResponse(code = 200, message = "No Matched Slots Found"),
             @ApiResponse(code = 422, message = "Unable to query API"),
             @ApiResponse(code = 500, message = "Server Error")
     })
-    @GetMapping(value = "/slots/person/", produces = MediaType.APPLICATION_JSON_VALUE)
-    BasicResponse<List<SlotDTO>> findSlotsByPerson(@ApiParam(value = "Person Identifier", required = true) @RequestParam final Long personId);
+    @GetMapping(value = "/slots/user/", produces = MediaType.APPLICATION_JSON_VALUE)
+    BasicResponse<List<SlotDTO>> findSlotsByUser(@ApiParam(value = "User Identifier", required = true) @RequestParam final Long userId);
 
     @ApiOperation(value = "Find Matched Slots Between Candidates and Interviewers", nickname = "findMatchedSlots", response = BasicResponse.class)
     @ApiResponses(value = {
